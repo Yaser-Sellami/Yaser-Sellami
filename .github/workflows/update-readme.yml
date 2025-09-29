@@ -1,0 +1,24 @@
+name: Update Portfolio
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # Ogni giorno a mezzanotte
+  workflow_dispatch:       # Avvio manuale se vuoi
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Genera contenuto dinamico
+        run: |
+          echo "## ⏰ Last update: $(date)" > README.md
+          echo "" >> README.md
+
+      - name: Commit e push
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Automatic update README"
+
